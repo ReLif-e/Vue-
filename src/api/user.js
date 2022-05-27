@@ -14,8 +14,12 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
+export function getInfo() {
+  return service({
+    method: 'post',
+    url: 'sys/profilen'
 
+  })
 }
 
 export function logout() {

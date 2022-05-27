@@ -44,6 +44,7 @@
       </el-form-item>
 
       <el-button class="loginBtn" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="hlogin">登入</el-button>
+      <el-button class="loginBtn" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="wlogin">yonghu</el-button>
 
       <div class="tips">
         <span style="margin-right:20px;">账号: 13800000002</span>
@@ -57,7 +58,7 @@
 <script>
 // {}这种写法是运用里面的方法
 import { validateMobile } from '@/utils/validate'
-import { login } from '@/api/user'
+import { getInfo, login } from '@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -133,6 +134,10 @@ export default {
         if (!valid) return
         this.dologin()
       })
+    },
+    async  wlogin() {
+      const { data: res } = await getInfo()
+      console.log(res)
     }
   }
 }

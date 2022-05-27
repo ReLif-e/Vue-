@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 // import { MessageBox, Message } from 'element-ui'
 // import store from '@/store'
 // import { getToken } from '@/utils/auth'
@@ -10,6 +11,20 @@ const service = axios.create({
   // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
+})
+
+// 请求拦截器
+service.interceptors.request.use(function(config) {
+  const token = store.state.user.token
+  // 在发送请求之前做些什么
+  console.log(config)
+  if (token) {
+    config.headers.Authorization = 'Bearer ' + token
+  }
+  return config
+}, function(error) {
+  // 对请求错误做些什么
+  return Promise.reject(error)
 })
 
 // 响应拦截器, 上面已经重新定义了一个新的axios所以响应拦截的是新定义的service
