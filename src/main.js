@@ -1,11 +1,14 @@
 import Vue from 'vue'
-
+// 重置css样式:padding:0 margin:0等
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+
+// 导入语言包
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 
+//global 全局css
 import '@/styles/index.scss' // global css
 
 import App from './App'
@@ -23,10 +26,10 @@ import '@/permission' // permission control
  * Currently MockJs will be used in the production environment,
  * please remove it before going online ! ! !
  */
-if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
-}
+// if (process.env.NODE_ENV === 'production') { //关掉上线的mock
+//   const { mockXHR } = require('../mock')
+//   mockXHR()
+// }
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })

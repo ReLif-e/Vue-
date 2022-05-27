@@ -1,4 +1,5 @@
 <template>
+  <!-- sidebars侧边栏 navbar头部 app-main页面主体-->
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
