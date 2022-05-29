@@ -1,3 +1,38 @@
+import router from '@/router'
+
+// 导入进度条
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
+// 引入token
+import store from '@/store'
+
+// 设置白名单
+const witchlist = ['/login', '/404']
+// to,去哪，from从哪来，next放行
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+  const token = store.state.user.token
+  if (token) {
+    if (to.path === '/login') {
+      NProgress.done()
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    if (witchlist.includes(to.path)) {
+      next()
+    } else {
+      NProgress.done()
+      next('/login')
+    }
+  }
+})
+
+// 路由后置守卫
+router.afterEach(() => {
+  NProgress.done()
+})
 // import router from './router'
 // import store from './store'
 // import { Message } from 'element-ui'

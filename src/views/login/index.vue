@@ -118,11 +118,12 @@ export default {
       try {
         const res = await login(this.loginForm)
         // console.log('登入成功', res)
-        // 登入成功后提醒用户
-        this.$message.success(res.message)
-
         // 调用user里面的UpdataToken并把返回数据里面的token携带过去
         this.$store.commit('user/UpdataToken', res.data)
+        // 登入成功后提醒用户
+        this.$message.success(res.message)
+        // 登入成功跳转到主页
+        this.$router.push('/')
       } catch (e) {
         console.log('登入错误的原因是', e)
         // 登入失败后提醒用户
