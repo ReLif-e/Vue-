@@ -6,7 +6,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 // 导入语言包
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+// import locale from 'element-ui/lib/locale/lang/en' // lang i18n英语
+import locale from 'element-ui/lib/locale/lang/ja' // lang i18n
 
 //global 全局css
 import '@/styles/index.scss' // global css

@@ -54,8 +54,24 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$confirm('确定退出吗？', '提示', { type: 'warning' })
+        .then(() => {
+          // 调用清除user/actions里面的方法
+          this.$store.dispatch('user/quit')
+          // 跳转到登入页面
+          // this.$router.push('/login')
+          this.$router.push({
+            path: '/login',
+            query: {
+              return_url: this.$route.fullPath // 路由会自动转码
+            }
+          })
+          // 提醒退出成功
+          this.$message.success('退出成功')
+        })
+        .catch(() => {
+          console.log(1)
+        })
     }
   }
 }

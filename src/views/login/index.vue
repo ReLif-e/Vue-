@@ -123,7 +123,8 @@ export default {
         // 登入成功后提醒用户
         this.$message.success(res.message)
         // 登入成功跳转到主页
-        this.$router.push('/')
+        this.$router.push(this.$route.query.return_url)
+        console.log(this.$route)
       } catch (e) {
         console.log('登入错误的原因是', e)
         // 登入失败后提醒用户
