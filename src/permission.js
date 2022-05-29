@@ -3,16 +3,18 @@ import router from '@/router'
 // 导入进度条
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
+
 // 引入token
 import store from '@/store'
 
 // 设置白名单
 const witchlist = ['/login', '/404']
 // to,去哪，from从哪来，next放行
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   NProgress.start()// 进度条开始
   const token = store.state.user.token
   if (token) {
+    await store.dispatch('user/GetUserInfo')
     if (to.path === '/login') {
       NProgress.done()
       next('/')

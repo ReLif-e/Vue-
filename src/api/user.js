@@ -13,11 +13,25 @@ export function login(data) {
     data
   })
 }
-
+/**
+ *
+ * @returns 获取用户信息
+ */
 export function getInfo() {
   return service({
     method: 'post',
-    url: 'sys/profilen'
+    url: '/sys/profile'
+
+  })
+}
+/**
+ *
+ * @returns 再次获取员工信息的第二次请求，获取头像
+ */
+export function getuserDetailById(id) {
+  return service({
+    method: 'get',
+    url: '/sys/user/' + id
 
   })
 }
