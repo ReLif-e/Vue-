@@ -10,7 +10,7 @@ import store from '@/store'
 const witchlist = ['/login', '/404']
 // to,去哪，from从哪来，next放行
 router.beforeEach((to, from, next) => {
-  NProgress.start()
+  NProgress.start()// 进度条开始
   const token = store.state.user.token
   if (token) {
     if (to.path === '/login') {
@@ -23,7 +23,7 @@ router.beforeEach((to, from, next) => {
     if (witchlist.includes(to.path)) {
       next()
     } else {
-      NProgress.done()
+      NProgress.done()// 进度条结束
       next('/login')
     }
   }
