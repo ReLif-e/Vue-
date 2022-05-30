@@ -6,15 +6,20 @@ import 'nprogress/nprogress.css' // progress bar style
 
 // 引入token
 import store from '@/store'
+import getPageTitle from './utils/get-page-title'
 
 // 设置白名单
 const witchlist = ['/login', '/404']
 // to,去哪，from从哪来，next放行
+// 前置路由守卫
 router.beforeEach(async(to, from, next) => {
+  // console.log(to, from)
   NProgress.start()// 进度条开始
   const token = store.state.user.token
   if (token) {
-    await store.dispatch('user/GetUserInfo')
+    if (!store.getters.userid) { // 如果没有Id那么就发送请求
+      await store.dispatch('user/GetUserInfo')
+    }
     if (to.path === '/login') {
       NProgress.done()
       next('/')
@@ -32,8 +37,10 @@ router.beforeEach(async(to, from, next) => {
 })
 
 // 路由后置守卫
-router.afterEach(() => {
+router.afterEach((to, from) => {
+  // console.log(to)
   NProgress.done()
+  document.title = getPageTitle(to.meta.title)
 })
 // import router from './router'
 // import store from './store'

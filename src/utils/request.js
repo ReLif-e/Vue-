@@ -1,5 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
+
+import router from '@/router'
 // import { MessageBox, Message } from 'element-ui'
 // import store from '@/store'
 // import { getToken } from '@/utils/auth'
@@ -39,6 +41,16 @@ service.interceptors.response.use(function(response) {
 }, function(error) {
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
+  console.dir(error)
+  if (error.response.data.code === 10002) { // token过期且登入返回之前所访问的页面
+    store.dispatch('user/quit')
+    router.push({
+      path: '/login',
+      query: {
+        return_url: location.hash.substring(1)
+      }
+    })
+  }
   return Promise.reject(error)
 })
 
