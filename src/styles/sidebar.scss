@@ -8,10 +8,9 @@
   }
 
   .sidebar-container {
-    background: -webkit-linear-gradient(bottom, #3d6df8, #5b8cff);
     transition: width 0.28s;
     width: $sideBarWidth !important;
-    background-color: $menuBg;
+    background: -webkit-linear-gradient(bottom, #8d3df8, #ff5b5b) !important;
     height: 100%;
     position: fixed;
     font-size: 0px;
@@ -27,8 +26,8 @@
     }
 
     .scrollbar-wrapper {
-      background: url('~@/assets/common/leftnavBg.png') no-repeat 0 100%;
       overflow-x: hidden !important;
+      background: url('~@/assets/common/leftnavBg.png') no-repeat 0 100%;
     }
 
     .el-scrollbar__bar.is-vertical {
@@ -68,6 +67,12 @@
       border: none;
       height: 100%;
       width: 100% !important;
+      .router-link-active{
+        background-color: rgba(20, 251, 236, 0.653) !important;
+      .svg-icon{
+        color: rgb(168, 238, 88) !important;
+      }
+    }
       a{
         li{
           .svg-icon{
@@ -119,6 +124,7 @@
   .hideSidebar {
     .sidebar-container {
       width: 54px !important;
+   
     }
 
     .main-container {
@@ -190,6 +196,7 @@
     .sidebar-container {
       transition: transform .28s;
       width: $sideBarWidth !important;
+      
     }
 
     &.hideSidebar {
@@ -197,6 +204,7 @@
         pointer-events: none;
         transition-duration: 0.3s;
         transform: translate3d(-$sideBarWidth, 0, 0);
+        
       }
     }
   }
