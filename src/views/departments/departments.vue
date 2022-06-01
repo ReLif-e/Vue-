@@ -18,7 +18,7 @@
                     操作<i class="el-icon-arrow-down" />
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>添加子部门</el-dropdown-item>
+                    <el-dropdown-item @click.native="hShow">添加子部门</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </el-col>
@@ -42,7 +42,8 @@
                         操作<i class="el-icon-arrow-down" />
                       </span>
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>添加子部门</el-dropdown-item>
+                        <el-dropdown-item @click.native="hShow(scope.data.id)">添加子部门</el-dropdown-item>
+                        <el-dropdown-item @click.native="hByid(scope.data.id)">编辑</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </el-col>
@@ -53,33 +54,79 @@
         </el-tree>
       </el-card>
     </div>
+
+    <!-- 添加 -->
+    <el-dialog
+      title="添加"
+      :visible.sync="dialogVisible"
+      width="80%"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <addEnd v-if="dialogVisible" :id="cruyId" :is-edit="isEdit" @success="hsuccess" />
+    </el-dialog>
+
+    <!-- 编辑 -->
+    <el-dialog
+      title="编辑"
+      :visible.sync="dialogVisibleEdit"
+      width="80%"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <addEnd v-if="dialogVisibleEdit" :id="cruyId" :is-edit="isEdit" @success="hsuccess" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import { GetList } from '@/api/departments'
+import { tranListToTreeData } from '@/utils'
+import addEnd from './addEnd.vue' // 在同级下创建一个封装dialog里面内容的组件再导入，形成复用
 export default {
+  components: {
+    addEnd
+  },
   data() {
     return {
       // 依赖一份树形数据
-      list: [{
-        name: '财务部',
-        manager: '刘备',
-        children: [
-          {
-            name: '财务核算部',
-            manager: '张飞'
-          },
-          {
-            name: '税务核算部',
-            manager: '关羽'
-          }
-        ]
-      }]
+      list: [],
+      dialogVisible: false,
+      dialogVisibleEdit: false,
+      cruyId: '',
+      isEdit: false
     }
   },
+  created() {
+    this.GetPeople()
+  },
   methods: {
-    text(a) {
-      console.log(a)
+    async GetPeople() {
+      try {
+        const res = await GetList()
+        res.data.depts.shift()
+        console.log(res)
+        this.list = tranListToTreeData(res.data.depts)
+      } catch {
+        1
+      }
+    }, // 添加
+    hShow(id) {
+      // 把id传入并赋值给cruyId再传进子组件
+      this.dialogVisible = true
+      this.cruyId = id
+      this.isEdit = false
+    },
+    // 编辑,创建一个状态，把状态传入子组件，判断打开的是编辑页面还是添加页面
+    hByid(id) {
+      this.dialogVisibleEdit = true
+      this.cruyId = id
+      this.isEdit = true
+    },
+    hsuccess() {
+      this.dialogVisibleEdit = false
+      this.dialogVisible = false
+      this.GetPeople()
     }
   }
 }
