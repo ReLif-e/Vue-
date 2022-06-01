@@ -32,3 +32,10 @@ export function putByid(data) {
     data
   })
 }
+
+export function DelId(id) {
+  return request({
+    method: 'delete',
+    url: '/company/department/' + id
+  })
+}

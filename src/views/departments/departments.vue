@@ -44,6 +44,7 @@
                       <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item @click.native="hShow(scope.data.id)">添加子部门</el-dropdown-item>
                         <el-dropdown-item @click.native="hByid(scope.data.id)">编辑</el-dropdown-item>
+                        <el-dropdown-item @click.native="hDel(scope.data.id)">删除</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </el-col>
@@ -57,7 +58,7 @@
 
     <!-- 添加 -->
     <el-dialog
-      title="添加"
+      :title="isEdit? '编辑' : '添加'"
       :visible.sync="dialogVisible"
       width="80%"
       :close-on-click-modal="false"
@@ -80,7 +81,7 @@
 </template>
 
 <script>
-import { GetList } from '@/api/departments'
+import { DelId, GetList } from '@/api/departments'
 import { tranListToTreeData } from '@/utils'
 import addEnd from './addEnd.vue' // 在同级下创建一个封装dialog里面内容的组件再导入，形成复用
 export default {
@@ -127,6 +128,21 @@ export default {
       this.dialogVisibleEdit = false
       this.dialogVisible = false
       this.GetPeople()
+    },
+    hDel(id) {
+      this.$confirm('确定删除吗？', '提示', { type: 'warning' })
+        .then(async() => {
+          try {
+            const res = await DelId(id)
+            this.GetPeople()
+            this.$message.success(res.message)
+          } catch (e) {
+            this.$message.error(e.message)
+          }
+        })
+        .catch(() => {
+
+        })
     }
   }
 }
