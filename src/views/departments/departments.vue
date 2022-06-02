@@ -44,7 +44,7 @@
                       <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item @click.native="hShow(scope.data.id)">添加子部门</el-dropdown-item>
                         <el-dropdown-item @click.native="hByid(scope.data.id)">编辑</el-dropdown-item>
-                        <el-dropdown-item @click.native="hDel(scope.data.id)">删除</el-dropdown-item>
+                        <el-dropdown-item v-if="scope.data.children.length === 0" @click.native="hDel(scope.data.id)">删除</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </el-col>

@@ -112,6 +112,7 @@ export default {
     //   }
     // },
     hCancel() {
+      this.$emit('success') // 点击取消按钮关闭弹窗
     }
 
   }
