@@ -10,6 +10,12 @@ export function GetList() {
   })
 }
 
+// -------------------------
+/**
+ *
+ * 添加部门的接口
+ *
+ */
 export function AddDepartment(data) {
   return request({
     method: 'post',
@@ -18,6 +24,12 @@ export function AddDepartment(data) {
   })
 }
 
+// -------------------------
+/**
+ *
+ *通过点击按钮的id来回填数据内容
+ *
+ */
 export function getByid(id) {
   return request({
     method: 'get',
@@ -25,6 +37,12 @@ export function getByid(id) {
   })
 }
 
+// -------------------------
+/**
+ *
+ * 更新数据的接口
+ *
+ */
 export function putByid(data) {
   return request({
     method: 'put',
@@ -33,6 +51,12 @@ export function putByid(data) {
   })
 }
 
+// -------------------------
+/**
+ *
+ * 删除部门的接口
+ *
+ */
 export function DelId(id) {
   return request({
     method: 'delete',

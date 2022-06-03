@@ -45,6 +45,7 @@
                         <el-dropdown-item @click.native="hShow(scope.data.id)">添加子部门</el-dropdown-item>
                         <el-dropdown-item @click.native="hByid(scope.data.id)">编辑</el-dropdown-item>
                         <el-dropdown-item v-if="scope.data.children.length === 0" @click.native="hDel(scope.data.id)">删除</el-dropdown-item>
+                        <!-- 判断，如果有子部门就不显示删除按钮 -->
                       </el-dropdown-menu>
                     </el-dropdown>
                   </el-col>
@@ -64,18 +65,18 @@
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <addEnd v-if="dialogVisible" :id="cruyId" :is-edit="isEdit" @success="hsuccess" />
+      <addEnd v-if="dialogVisible" :id="cruyId" :origin-list="originList" :is-edit="isEdit" @success="hsuccess" />
     </el-dialog>
 
     <!-- 编辑 -->
     <el-dialog
-      title="编辑"
+      :title="isEdit? '编辑' : '添加'"
       :visible.sync="dialogVisibleEdit"
       width="80%"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <addEnd v-if="dialogVisibleEdit" :id="cruyId" :is-edit="isEdit" @success="hsuccess" />
+      <addEnd v-if="dialogVisibleEdit" :id="cruyId" :origin-list="originList" :is-edit="isEdit" @success="hsuccess" />
     </el-dialog>
   </div>
 </template>
@@ -95,7 +96,8 @@ export default {
       dialogVisible: false,
       dialogVisibleEdit: false,
       cruyId: '',
-      isEdit: false
+      isEdit: false,
+      originList: []
     }
   },
   created() {
@@ -106,7 +108,8 @@ export default {
       try {
         const res = await GetList()
         res.data.depts.shift()
-        console.log(res)
+        this.originList = res.data.depts.map(({ id, pid, code, name }) => ({ id, name, code, pid }))
+        console.log(this.originList)
         this.list = tranListToTreeData(res.data.depts)
       } catch {
         1
