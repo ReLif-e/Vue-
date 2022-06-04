@@ -61,7 +61,7 @@
     <el-dialog
       :title="isEdit? '编辑' : '添加'"
       :visible.sync="dialogVisible"
-      width="80%"
+      width="50%"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >

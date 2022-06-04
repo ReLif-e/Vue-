@@ -12,7 +12,7 @@ const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 2000 // request timeout
 })
 
 // 请求拦截器
@@ -42,7 +42,7 @@ service.interceptors.response.use(function(response) {
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误做点什么
   console.dir(error)
-  if (error.response.data.code === 10002) { // token过期且登入返回之前所访问的页面
+  if (error.response && error.response.data.code === 10002) { // token过期且登入返回之前所访问的页面
     store.dispatch('user/quit')
     router.push({
       path: '/login',

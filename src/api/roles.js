@@ -23,3 +23,29 @@ export function subRoles(id) {
     method: 'delete'
   })
 }
+
+/**
+ *
+ * 点击按钮添加角色的接口
+ *
+ */
+export function addRoles(data) {
+  return request({
+    url: '/sys/role',
+    method: 'post',
+    data
+  })
+}
+
+/**
+ *
+ * 点击按钮更新角色的接口
+ *
+ */
+export function putRoles(data) {
+  return request({
+    url: '/sys/role/' + data.id,
+    method: 'put',
+    data
+  })
+}

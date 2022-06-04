@@ -19,6 +19,13 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+// 公共组件注册-----------------------------------------------------
+// import PageTool from '@/components/PageTool'
+// // 第一个是自定义的,第二个是导入的文件名
+// Vue.component('PageTool', PageTool)
+import MYUI from '@/components'
+Vue.use(MYUI)
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
