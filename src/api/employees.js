@@ -21,3 +21,40 @@ export function Getemploy(params) {
     params
   })
 }
+/**
+ *
+ * 表单点击删除按钮
+ *
+ */
+export function delEmployee(id) {
+  return request({
+    method: 'delete',
+    url: `/sys/user/${id}`
+  })
+}
+
+/**
+ *
+ * 表单添加员工按钮
+ *
+ */
+export function addEmployee(data) {
+  return request({
+    method: 'post',
+    url: `/sys/user`,
+    data
+  })
+}
+
+/**
+ *
+ * 批量导入员工接口
+ *
+ */
+export function importEmployee(data) {
+  return request({
+    method: 'post',
+    url: `/sys/user/batch`,
+    data
+  })
+}
