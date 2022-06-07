@@ -156,7 +156,7 @@ export default {
       this.Setting()
     },
 
-    // 添加角色按钮
+    // 确定按钮
     async hSubmit() {
       // 兜底校验，点击确定后，检查表单的确认项  有没有  没填写 或 格式错误
       const valid = await this.$refs.roleForm.validate().catch(e => e)
@@ -211,6 +211,8 @@ export default {
       // 重新渲染页面
       this.Setting()
     },
+
+    // 编辑
     hEidt(row) {
       // 打开弹框
       this.showDialog = true

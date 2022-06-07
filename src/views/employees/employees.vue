@@ -11,7 +11,7 @@
         <!-- 右侧 -->
         <template #right>
           <el-button round size="small" type="primary" @click="$router.push('/employees/import')">导入Excel</el-button>
-          <el-button round size="small" type="warning">导出Excel</el-button>
+          <el-button round size="small" type="warning" @click="derive">导出Excel</el-button>
           <el-button round size="small" type="success" @click="ShowDialog=true">新增员工</el-button>
         </template>
       </page-tool>
@@ -58,6 +58,7 @@
       />
     </el-card>
     <el-dialog
+      :total="total"
       :visible.sync="ShowDialog"
       title="新增员工"
       :close-on-click-modal="false"
@@ -97,6 +98,7 @@ export default {
   data() {
     return {
       Employees: [],
+      abc: [],
       total: 1,
       q: {
         page: 1,
@@ -116,7 +118,7 @@ export default {
 
       // 返回数据等于自定义的空壳
       this.Employees = res.data.rows
-      console.log(this.Employees)
+      // console.log(this.Employees)
 
       // 总条数
       this.total = res.data.total
@@ -186,6 +188,23 @@ export default {
     hClose() {
       this.$refs.AddEmploy.resetForm()
     }
+    // 导出
+    // async  derive() {
+    //   import('@/vendor/Export2Excel').then(excel => {
+    //     // excel表示导入的模块对象
+    //     // console.log(excel)
+    //     excel.export_json_to_excel({
+    //       header: this.Employees, // 表头 必填
+    //       data: this.Employees, // 具体数据 必填
+    //       filename: 'excel-list', // 文件名称
+    //       autoWidth: true, // 宽度是否自适应
+    //       bookType: 'xlsx' // 生成的文件类型
+
+    //     })
+    //   })
+    //   const res = await Getemploy()
+    //   console.log(res)
+    // }
 
   }
 }
