@@ -23,7 +23,7 @@
 
       <el-form-item label="员工头像">
         <!-- 放置上传图片 -->
-        <UploadImg :value="userInfo.staffPhoto" @input="e=>userInfo.staffPhoto = e" />
+        <UploadImg v-model="userInfo.staffPhoto" @input="e=>userInfo.staffPhoto = e" />
       </el-form-item>
 
       <!-- 保存个人信息 -->
