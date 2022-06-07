@@ -16,7 +16,16 @@ export default {
       component: () => import('@/views/employees/import.vue'),
       meta: { title: 'Excel导入', icon: 'people' },
       hidden: true
+    },
+    {
+      // path: 'detail',  //传统路由跳转，有？id=
+      path: 'detail/:id', // 动态路由传参，可以省区路径上面的？id=
+      name: 'detail',
+      component: () => import('@/views/employees/detail.vue'),
+      meta: { title: 'Excel导入', icon: 'people' },
+      hidden: true
     }
+
   ]
 
 }

@@ -40,7 +40,11 @@
         </el-table-column>
         <el-table-column label="操作">
           <template v-slot="{row}">
-            <el-button type="text">查看</el-button>
+            <!-- 去掉？id=  的形式 -->
+            <el-button type="text" @click="$router.push('./employees/detail/' + row.id)">查看</el-button>
+
+            <!-- id？的方法传参 -->
+            <!-- <el-button type="text" @click="$router.push('./employees/detail?id=' + row.id)">查看</el-button> -->
             <el-button type="text">分配角色</el-button>
             <el-button type="text" @click="hDel(row.id)">删除角色</el-button>
           </template>
@@ -187,24 +191,81 @@ export default {
     },
     hClose() {
       this.$refs.AddEmploy.resetForm()
-    }
+    },
     // 导出
-    // async  derive() {
-    //   import('@/vendor/Export2Excel').then(excel => {
-    //     // excel表示导入的模块对象
-    //     // console.log(excel)
-    //     excel.export_json_to_excel({
-    //       header: this.Employees, // 表头 必填
-    //       data: this.Employees, // 具体数据 必填
-    //       filename: 'excel-list', // 文件名称
-    //       autoWidth: true, // 宽度是否自适应
-    //       bookType: 'xlsx' // 生成的文件类型
+    async  derive() {
+      // 表单头
+      const mapInfo = {
+        'id': '编号',
+        'password': '密码',
+        'mobile': '手机号',
+        'username': '姓名',
+        'timeOfEntry': '入职日期',
+        'formOfEmployment': '聘用形式',
+        'correctionTime': '转正日期',
+        'workNumber': '工号',
+        'departmentName': '部门',
+        'staffPhoto': '头像地址'
+      }
 
-    //     })
-    //   })
-    //   const res = await Getemploy()
-    //   console.log(res)
-    // }
+      // 发送请求获取数据
+      const res = await Getemploy({ page: 1, size: this.total })
+      console.log(res)
+
+      // 把数据存入一个变量里面
+      const list = res.data.rows
+      console.log(list)
+
+      // // 遍历数据把数据里每个数据转换尾中文
+      // const zhList = list.map(enObj => {
+      //   // 准备装数据的盒子
+      //   const zhObj = {}
+
+      //   // 把里面的值提取出来并赋值给另一个变量
+      //   const enKeys = Object.keys(enObj)
+
+      //   // 把被赋值的变量遍历一遍，并从对应的映射关系里面转换
+      //   enKeys.forEach(enKey => {
+      //   // 因为提取出来的是英文,映射关系是英文转中问的,可以对应上
+      //     const zhKey = mapInfo(enKey)
+
+      //     // 把数据里面的英文转换成映射里面的中文
+      //     zhObj[zhKey] = enObj[enKey]
+      //   })
+      //   return zhObj
+      // })
+      // console.log(zhList)
+
+      // 取出第一个数据
+      // const first = zhList[0]
+      const first = list[0]
+
+      // 如果没有获取到数据就返回
+      if (!first) return
+
+      // 设置表单头
+      const header = Object.keys(first).map(enKey => mapInfo[enKey])
+
+      // 改变体内数据
+      const data = list.map(item => {
+        const code = item['formOfEmployment']
+
+        item['formOfEmployment'] = hireTypeMap[code]
+
+        return Object.values(item)
+      })
+      const excel = await import('@/vendor/Export2Excel')
+      // excel表示导入的模块对象
+      // console.log(excel)
+      excel.export_json_to_excel({
+        header, // 表头 必填
+        data, // 具体数据 必填
+        filename: '员工入职信息', // 文件名称
+        autoWidth: true, // 宽度是否自适应
+        bookType: 'xlsx' // 生成的文件类型
+
+      })
+    }
 
   }
 }

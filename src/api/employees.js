@@ -58,3 +58,29 @@ export function importEmployee(data) {
     data
   })
 }
+
+// /**
+//  *
+//  * 获取员工基本信息
+//  *
+//  */
+// export function GetEmployeeid(id) {
+//   return request({
+//     method: 'post',
+//     url: `/sys/user/batch` + id
+//   })
+// }
+// user里面封装了
+
+/**
+ *
+ * 批量导入员工接口
+ *
+ */
+export function updateEmployees(data) {
+  return request({
+    method: 'put',
+    url: `/sys/user/` + data.id,
+    data
+  })
+}
