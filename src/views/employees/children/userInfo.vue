@@ -23,7 +23,7 @@
 
       <el-form-item label="员工头像">
         <!-- 放置上传图片 -->
-        <img>
+        <UploadImg :value="userInfo.staffPhoto" @input="e=>userInfo.staffPhoto = e" />
       </el-form-item>
 
       <!-- 保存个人信息 -->
@@ -43,7 +43,8 @@ export default {
       userId: this.$route.query.id,
       userInfo: {
         mobile: '',
-        timeOfEntry: ''
+        timeOfEntry: '',
+        staffPhoto: ''
       },
       rules: {
         // mobile: [{ pattern: /^1[1-3]\d{9}$/, message: '手机号不能为空', triggler: 'blur' }]
