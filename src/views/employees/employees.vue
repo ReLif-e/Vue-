@@ -46,15 +46,17 @@
 
             <!-- id？的方法传参 -->
             <!-- <el-button type="text" @click="$router.push('./employees/detail?id=' + row.id)">查看</el-button> -->
-            <el-button type="text">分配角色</el-button>
+            <el-button type="text" @click="Assign(row.id)">分配角色</el-button>
             <el-button type="text" @click="hDel(row.id)">删除角色</el-button>
           </template>
         </el-table-column>
 
       </el-table>
+
+      <!-- 分页的 -->
       <el-pagination
         :current-page.sync="q.page"
-        :page-sizes="[2, 6, 7, 8]"
+        :page-sizes="[5, 6, 7, 8]"
         layout="sizes, prev, pager, next"
         :page-size="q.size"
         :total="total"
@@ -62,6 +64,8 @@
         @current-change="handlecurrentChange"
       />
     </el-card>
+
+    <!-- 新增员工的 -->
     <el-dialog
       :total="total"
       :visible.sync="ShowDialog"
@@ -76,19 +80,41 @@
         @close="ShowDialog = false"
       />
     </el-dialog>
+
+    <!-- 分配角色 -->
+    <el-dialog
+      :total="total"
+      :visible.sync="ShowDialogRole"
+      title="分配角色"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      @closed="$refs.AtryIds.AssigIds()"
+    >
+      <AssigRole
+        :id="tryId"
+        ref="AtryIds"
+        @closeRole="ShowDialogRole=false"
+      />
+    </el-dialog>
   </div>
 
 </template>
 
 <script>
+// 按需导入接口
 import { delEmployee, Getemploy } from '@/api/employees'
+
 // 枚举数据
 import employees from '@/constant/employees'
 
-// 导入弹框
+// 导入新增员工子组件弹框
 import Empdialog from './empDialog.vue'
 
+// 导入格式化的包
 import dayjs from 'dayjs'
+
+// 导入分配角色的子组件弹框
+import AssigRole from './assigRose.vue'
 
 const hireTypeMap = {}
 // 可选作业: 把 forEach 变成 reduce
@@ -98,18 +124,30 @@ employees.hireType.forEach(item => {
 })
 export default {
   components: {
-    Empdialog
+    Empdialog,
+    AssigRole
+
   },
   data() {
     return {
+      // 获取数据以后拿来储存数据后渲染的空数组
       Employees: [],
-      abc: [],
+
+      // 数据的总条数
       total: 1,
+
+      // 分页数据
       q: {
         page: 1,
-        size: 2
+        size: 5
       },
-      ShowDialog: false // 弹框的显示与否
+
+      // 弹框的显示与否
+      ShowDialog: false, // 新增员工的弹框
+      ShowDialogRole: false, // 分配角色的弹框
+
+      // 传递到子组件的id
+      tryId: ''
     }
   },
   created() {
@@ -128,7 +166,9 @@ export default {
       // 总条数
       this.total = res.data.total
     },
-    formEmployees(code) { // 调用constant/employees文件里面的hireType方法,同通过传递来的id去里面找对应的中文并渲染
+
+    // 调用constant/employees文件里面的hireType方法,同通过传递来的id去里面找对应的中文并渲染
+    formEmployees(code) {
       // const res = employees.hireType.find(item => item.id === code).value
       // console.log(res)
       // if (res) {
@@ -177,9 +217,13 @@ export default {
         this.$message.error(e.message)
       }
     },
+
+    // 格式化时间
     formData(time) {
       return dayjs(time).format('YYYY-MM-DD')
     },
+
+    // 子组件触发的关闭事件
     hsuccess() {
       // 关闭dialog
       this.ShowDialog = false
@@ -190,9 +234,12 @@ export default {
       // 重新渲染
       this.employ()
     },
+
+    // 子组件关闭时出发的清除表单验证
     hClose() {
       this.$refs.AddEmploy.resetForm()
     },
+
     // 导出
     async  derive() {
       // 表单头
@@ -266,8 +313,21 @@ export default {
         bookType: 'xlsx' // 生成的文件类型
 
       })
-    }
+    },
 
+    // 分配角色按钮
+    Assign(id) {
+      // console.log(id)
+      this.tryId = id
+
+      // 打开弹框
+      this.ShowDialogRole = true
+
+      // 清除表单，调用子组件发送请求的函数请求
+      this.$nextTick(() => {
+        this.$refs.AtryIds.AssigRoles()
+      })
+    }
   }
 }
 </script>
