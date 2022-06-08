@@ -11,7 +11,8 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="staffPhoto" class="user-avatar">
+          <!-- <img :src="staffPhoto" class="user-avatar"> -->
+          <ImageHolder :src="staffPhoto" class="user-avatar" />
           <span>{{ username }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
@@ -131,12 +132,14 @@ export default {
 
     .avatar-container {
       margin-right: 30px;
-
+      // vertical-align: top;
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
 
         .user-avatar {
+          text-align: center;
+          background-repeat: no-repeat;
           cursor: pointer;
           width: 50px;
           height: 50px;

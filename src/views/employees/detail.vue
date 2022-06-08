@@ -2,6 +2,7 @@
   <div class="employees-container">
     <div class="app-container">
       {{ $route.params.id }}
+      <div>公共组件</div>
       <el-card>
         <el-tabs>
           <el-tab-pane label="登录账户设置">

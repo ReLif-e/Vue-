@@ -17,7 +17,7 @@
       :http-request="upload"
     >
       <el-progress v-if=" progress && progress < 100 " type="circle" :percentage="progress" />
-      <img v-if="value " :src="value" class="avatar">
+      <img v-if="value && progress === 0" :src="value" class="avatar">
       <i v-show="!progress" v-else class="el-icon-plus avatar-uploader-icon" />
     </el-upload>
   </div>
@@ -72,6 +72,7 @@ export default {
           console.log(err || data)
           // 上传成功之后
           if (data.statusCode === 200) {
+            this.progress = 0
             // this.imageUrl = `https:${data.Location}`
             this.$emit('input', `https:${data.Location}`)
           }
@@ -120,8 +121,8 @@ export default {
   height: 178px;
   display: block;
 }
-/* .el-progress-circle{
+.el-progress-circle{
     width: 178px !important;
     height: 178px !important;
-} */
+}
 </style>
