@@ -24,7 +24,7 @@
         </el-table>
       </el-card>
     </div>
-    <el-dialog :visible.sync="showDialog" title="弹层标题">
+    <el-dialog ref="FormDate" :visible.sync="showDialog" title="弹层标题" @close="hClose">
       <!-- 表单内容 -->
       <el-form label-width="100px">
         <el-form-item label="权限名称">
@@ -50,7 +50,7 @@
       <template #footer>
         <div style="text-align: right;">
           <el-button @click="showDialog = false">取消</el-button>
-          <el-button type="primary">确定</el-button>
+          <el-button type="primary" @click="hSubmit">确定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -58,21 +58,22 @@
 </template>
 
 <script>
-import { getPermissionList } from '@/api/permisson' // api面按需导出，这里按需导入
+import { addPermission, getPermissionList } from '@/api/permisson' // api面按需导出，这里按需导入
 import { tranListToTreeData } from '@/utils'
 export default {
   data() {
     return {
       permission: [],
       showDialog: false, // 是否显示弹层
-      formData: {
+      formData: { // 添加传递的数据
         name: '', // 名称
         code: '', // 权限标识
         description: '', // 描述
         enVisible: '0', // 开启
         pid: '', // 添加到哪个节点下
         type: '' // 类型
-      }
+      },
+      rules: [] // 校验规则
     }
   },
   created() {
@@ -89,6 +90,7 @@ export default {
       // 转换成树形结构，因为渲染的时候有些子组件 row-key  支持树形数据，所有转换成树形数据
       this.permission = tranListToTreeData(res.data)
     },
+
     // 点击权限按钮显示的弹框
     hAdd(type, pid) {
       // 把传递来的数据放入数组里面方便添加数据
@@ -98,6 +100,39 @@ export default {
 
       // 显示弹框
       this.showDialog = true
+    },
+
+    // 点击确定发送请求
+    async hSubmit() {
+      // 清空表单
+      try {
+        const res = await addPermission(this.formData)
+        console.log(res)
+        // 关闭弹框
+        this.showDialog = false
+
+        // 重新渲染
+        this.loadpermission()
+
+        // 根据结果提醒用户
+        this.$message.success(res.message)
+      } catch (e) {
+        this.$message.error(e.message)
+      }
+    },
+
+    // 关闭时清空表单
+    hClose() {
+      this.formData = {
+        name: '', // 名称
+        code: '', // 权限标识
+        description: '', // 描述
+        enVisible: '0', // 开启
+        pid: '', // 添加到哪个节点下
+        type: '' // 类型
+      }
+      // 清空表单校验
+      this.$refs.FormDate.clearValidate()
     }
   }
 }
