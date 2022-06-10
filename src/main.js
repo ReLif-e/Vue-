@@ -20,6 +20,21 @@ import '@/icons' // icon
 import '@/permission' // permission control
 
 // 公共组件注册-----------------------------------------------------
+// 第一个参数是v-XXX  的名字
+Vue.directive('allow', {
+  inserted(el, binding) {
+    // console.log(el) el 是当前绑定的元素
+    // console.log(binding)  元素内部的属性
+
+    // poins是登入时获取的登入人的全部信息
+    const poins = store.state.user.getUser.roles.points
+
+    // 如果登入的权限信息里面没有按钮级权限的文字,那么就不会显示
+    if (!poins.includes(binding.value)) {
+      el.remove() // 自我删除
+    }
+  }
+})
 // import PageTool from '@/components/PageTool'
 // // 第一个是自定义的,第二个是导入的文件名
 // Vue.component('PageTool', PageTool)

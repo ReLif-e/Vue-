@@ -10,9 +10,9 @@
 
         <!-- 右侧 -->
         <template #right>
-          <el-button round size="small" type="primary" @click="$router.push('/employees/import')">导入Excel</el-button>
-          <el-button round size="small" type="warning" @click="derive">导出Excel</el-button>
-          <el-button round size="small" type="success" @click="ShowDialog=true">新增员工</el-button>
+          <el-button v-allow="'export_Exlcel'" round size="small" type="primary" @click="$router.push('/employees/import')">导入Excel</el-button>
+          <el-button v-allow="'Del_Exlcel'" round size="small" type="warning" @click="derive">导出Excel</el-button>
+          <el-button v-allow="'export_add'" round size="small" type="success" @click="ShowDialog=true">新增员工</el-button>
         </template>
       </page-tool>
     </div>

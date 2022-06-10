@@ -7,6 +7,6 @@ const getters = {
   // 定义了全局的属性.以后要使用姓名就调用"username"
   username: state => state.user.getUser.username,
   staffPhoto: state => state.user.getUser.staffPhoto,
-  userid: state => state.user.getUser.userid
+  userid: state => state.user.getUser.id
 }
 export default getters

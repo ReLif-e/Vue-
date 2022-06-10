@@ -34,6 +34,7 @@ export default {
       const res1 = await getuserDetailById(res.data.userId) // 把第一次获取的id,传递进第二次要id的请求里面获取头像
       // console.log(res1) //第二次获取用户信息
       context.commit('getUserInfo', { ...res.data, ...res1.data })
+      return { ...res.data, ...res1.data }
     },
     /**
      * 清空用户信息--清除Token(退出按钮)

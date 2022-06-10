@@ -170,7 +170,7 @@ export default {
     },
     // 删除按钮
     async hdel(id) {
-      const result = this.$confirm('确定删除吗?', '提示', { type: 'warning' }).catch(e => e)
+      const result = await this.$confirm('确定删除吗?', '提示', { type: 'warning' }).catch(e => e)
       if (result !== 'confing') return // 乘早返回
 
       try {

@@ -109,7 +109,7 @@ export default {
         const res = await GetList()
         res.data.depts.shift()
         this.originList = res.data.depts.map(({ id, pid, code, name }) => ({ id, name, code, pid }))
-        console.log(this.originList)
+        // console.log(this.originList)
         this.list = tranListToTreeData(res.data.depts)
       } catch {
         1

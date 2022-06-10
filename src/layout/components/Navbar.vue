@@ -34,6 +34,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { resetRouter } from '@/router'
 // import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
@@ -69,6 +70,7 @@ export default {
           })
           // 提醒退出成功
           this.$message.success('退出成功')
+          resetRouter()
         })
         .catch(() => {
           console.log(1)

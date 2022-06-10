@@ -49,3 +49,28 @@ export function putRoles(data) {
     data
   })
 }
+
+/**
+ *
+ * 点击按钮获取角色权限
+ *
+ */
+export function GetRoleDetail(id) {
+  return request({
+    url: '/sys/role/' + id,
+    method: 'get'
+  })
+}
+
+/**
+ *
+ * 点击按钮更新角色权限信息
+ *
+ */
+export function PutRoleDetail(data) {
+  return request({
+    url: '/sys/role/assignPrem',
+    method: 'put',
+    data
+  })
+}

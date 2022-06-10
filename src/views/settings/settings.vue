@@ -21,7 +21,7 @@
               <el-table-column label="描述" prop="description" />
               <el-table-column label="操作">
                 <template v-slot="{row}">
-                  <el-button size="small" type="success" @click="showDialogAssign = true">分配权限</el-button>
+                  <el-button size="small" type="success" @click="hAssign(row.id)">分配权限</el-button>
                   <el-button size="small" type="primary" @click="hEidt(row)">编辑</el-button>
                   <el-button size="small" type="danger" @click="Delete(row.id)">删除</el-button>
                 </template>
@@ -74,7 +74,7 @@
       title="分配权限(一级为路由页面查看权限-二级为按钮操作权限)"
       :visible.sync="showDialogAssign"
     >
-      <assign-permission />
+      <assign-permission v-if="showDialogAssign" :id="curIds" @close="showDialogAssign = false" />
     </el-dialog>
   </div>
 </template>
@@ -88,6 +88,7 @@ export default {
   },
   data() {
     return {
+      curIds: '',
       showDialogAssign: false,
       showDialog: false,
       roleForm: {
@@ -111,6 +112,9 @@ export default {
     this.Setting()
   },
   methods: {
+    close() {
+      this.showDialogAssign = false
+    },
     async Setting() {
       try {
         const res = await getRoles(this.q)
@@ -251,6 +255,15 @@ export default {
         description: ''
       }
       this.$refs.roleForm.resetFields()
+    },
+
+    // 分配权限
+    hAssign(id) {
+      this.showDialogAssign = true
+      // console.log(id)
+
+      // 传递进子组件
+      this.curIds = id
     }
 
   }

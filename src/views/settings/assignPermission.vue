@@ -26,7 +26,14 @@
 <script>
 import { getPermissionList } from '@/api/permisson'
 import { tranListToTreeData } from '@/utils'
+import { GetRoleDetail, PutRoleDetail } from '@/api/roles'
 export default {
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       AssignList: []
@@ -34,19 +41,47 @@ export default {
   },
   created() {
     this.GetAssign()
+    this.GetRoleIds()
   },
   methods: {
-    async GetAssign() {
-      const res = await getPermissionList()
-      // console.log(res)
 
-      this.AssignList = tranListToTreeData(res.data)
+    // 获取权限点
+    async GetAssign() {
+      try {
+        const res = await getPermissionList()
+        // console.log(res)
+
+        this.AssignList = tranListToTreeData(res.data)
+      } catch (e) {
+        console.log(e.message)
+      }
     },
 
+    // 数据回填
+    async GetRoleIds() {
+      try {
+        const res = await GetRoleDetail(this.id)
+        console.log(res)
+        this.$refs.tree.setCheckedKeys(res.data.permIds)
+      // this.AssignList = tranListToTreeData(res.data)
+      } catch (e) {
+        // this.$message.error(e.message)
+        console.log(e.message)
+      }
+    },
     // 获取权限的id
-    hSubmit() {
-      const res = this.$refs.tree.getCheckedKeys()
-      console.log(res)
+    async hSubmit() {
+      try {
+        const ids = this.$refs.tree.getCheckedKeys()
+        console.log(ids)
+        const res = await PutRoleDetail({ id: this.id, permIds: ids })
+
+        // 关闭弹框
+        this.$emit('close')
+        this.$message.success(res.message)
+      } catch (e) {
+        this.$message.error(e.message)
+      }
     }
   }
 }
