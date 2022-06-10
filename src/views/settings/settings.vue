@@ -21,7 +21,7 @@
               <el-table-column label="描述" prop="description" />
               <el-table-column label="操作">
                 <template v-slot="{row}">
-                  <el-button size="small" type="success">分配权限</el-button>
+                  <el-button size="small" type="success" @click="showDialogAssign = true">分配权限</el-button>
                   <el-button size="small" type="primary" @click="hEidt(row)">编辑</el-button>
                   <el-button size="small" type="danger" @click="Delete(row.id)">删除</el-button>
                 </template>
@@ -68,13 +68,27 @@
         </el-col>
       </el-row>
     </el-dialog>
+    <!-- 权限 -->
+    <!-- 分配权限的弹层 -->
+    <el-dialog
+      title="分配权限(一级为路由页面查看权限-二级为按钮操作权限)"
+      :visible.sync="showDialogAssign"
+    >
+      <assign-permission />
+    </el-dialog>
   </div>
 </template>
 <script>
 import { addRoles, getRoles, putRoles, subRoles } from '@/api/roles'
+import AssignPermission from './assignPermission.vue'
+
 export default {
+  components: {
+    AssignPermission
+  },
   data() {
     return {
+      showDialogAssign: false,
       showDialog: false,
       roleForm: {
         name: '',
@@ -100,7 +114,7 @@ export default {
     async Setting() {
       try {
         const res = await getRoles(this.q)
-        console.log(res)
+        // console.log(res)
 
         this.roles = res.data.rows
         this.total = res.data.total
