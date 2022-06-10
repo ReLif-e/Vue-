@@ -69,10 +69,10 @@ import { addPermission, delPermission, getPermissionDetail, getPermissionList, u
 import { tranListToTreeData } from '@/utils'
 export default {
   data() {
-    const validateName = (rule, value, callback) => {
-      console.log(value)
-      // 如果输入的值和数据里面的值一样就不允许添加
-    }
+    // const validateName = (rule, value, callback) => {
+    //   console.log(value)
+    //   // 如果输入的值和数据里面的值一样就不允许添加
+    // }
     return {
       isEdit: false,
       permission: [],
@@ -87,8 +87,8 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请写入权限名称' },
-          { validator: validateName, trigger: 'blur' }
+          { required: true, message: '请写入权限名称' }
+          // { validator: validateName, trigger: 'blur' }
 
         ],
         code: [
@@ -128,17 +128,20 @@ export default {
 
     // 点击确定发送请求
     async hSubmit() {
+      const valid = await this.$refs.FormDate.validate().catch(e => e)
+      if (!valid) return
+      // 兜底👆
+
       let res = null
-      if (this.isEdit) {
-        res = await updatePermission(this.formData)
-        console.log(res)
-      } else {
-        res = await addPermission(this.formData)
-        console.log(res)
-      }
       try {
-        const valid = await this.$refs.FormDate.validate().catch(e => e)
-        if (!valid) return
+        if (this.isEdit) {
+          res = await updatePermission(this.formData)
+          console.log(res)
+        } else {
+          res = await addPermission(this.formData)
+          console.log(res)
+        }
+
         // 关闭弹框
         this.showDialog = false
 

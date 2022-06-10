@@ -74,7 +74,7 @@ export function importEmployee(data) {
 
 /**
  *
- * 批量导入员工接口
+ * 保存员工信息接口
  *
  */
 export function updateEmployees(data) {
