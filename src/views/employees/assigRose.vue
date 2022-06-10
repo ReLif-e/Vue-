@@ -69,7 +69,6 @@ export default {
       console.log('芜湖')
     },
 
-    // 角色分配
     async  hSubmit() {
       try {
         // 发送请求
