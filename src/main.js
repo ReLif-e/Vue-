@@ -19,6 +19,8 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import i18n from '@/lang'
+
 // 公共组件注册-----------------------------------------------------
 // 第一个参数是v-XXX  的名字
 Vue.directive('allow', {
@@ -65,5 +67,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   render: h => h(App)
 })
