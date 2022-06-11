@@ -3,6 +3,7 @@ import UploadExcel from './UploadExcel'
 import UploadImg from './UploadImg'
 import ImageHolder from './ImageHolder'
 import Lang from './Lang'
+import ScreenFull from './ScreenFull'
 
 // 全局的组件
 export default {
@@ -12,5 +13,6 @@ export default {
     Vue.component('UploadImg', UploadImg)
     Vue.component('ImageHolder', ImageHolder)
     Vue.component('Lang', Lang)
+    Vue.component('ScreenFull', ScreenFull)
   }
 }

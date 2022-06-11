@@ -10,6 +10,8 @@
     </div>
 
     <div class="right-menu">
+      <ScreenFull />
+
       <Lang />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
