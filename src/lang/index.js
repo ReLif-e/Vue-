@@ -5,24 +5,31 @@ import locale from 'element-ui/lib/locale'
 import elementEN from 'element-ui/lib/locale/lang/en' // 引入饿了么的英文包
 import elementZH from 'element-ui/lib/locale/lang/zh-CN' // 引入饿了么的中文包
 import elementJA from 'element-ui/lib/locale/lang/ja' // 引入饿了么的中文包
+import enName from '@/lang/en'
+import zhName from '@/lang/zh'
+import jaName from '@/lang/ja'
+
 Vue.use(VueI18n) // 全局注册国际化包
 
 // 创建国际化插件的实例
 const i18n = new VueI18n({
   // 指定语言类型 zh表示中文  en表示英文
-  locale: 'ja',
+  locale: 'en',
   // 将elementUI语言包加入到插件语言数据里
   messages: {
     // 英文环境下的语言数据
     en: {
-      ...elementEN
+      ...elementEN,
+      ...enName
     },
     // 中文环境下的语言数据
     zh: {
-      ...elementZH
+      ...elementZH,
+      ...zhName
     },
     ja: {
-      ...elementJA
+      ...elementJA,
+      ...jaName
     }
   }
 })

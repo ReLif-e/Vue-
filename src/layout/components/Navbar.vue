@@ -4,11 +4,13 @@
 
     <!-- <breadcrumb class="breadcrumb-container" /> -->
     <div class="app-breadcrumb">
-      江苏传智播客教育科技股份有限公司
+      {{ $t('companyName') }}
       <span class="breadBtn">远古版</span>
+
     </div>
 
     <div class="right-menu">
+      <Lang />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- <img :src="staffPhoto" class="user-avatar"> -->
