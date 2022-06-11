@@ -1,5 +1,5 @@
 <template>
-  <!-- 放置一个图标 -->
+  <!-- 放置一个图标1 -->
   <div style="display:inline-block">
     <svg-icon icon-class="fullscreen" class="fullscreen" @click="toggles" />
   </div>
